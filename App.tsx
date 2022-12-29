@@ -1,11 +1,11 @@
-import { Text } from "react-native"
+import {SafeAreaView} from "react-native"
+import Home from "./src/screens/Home" 
 
 export default function App(){
 
   return(
-    <>
-    <Text>Opa</Text>
-    <Text>fragment</Text>
-    </>
+    <SafeAreaView style={{flex: 1}}>
+      <Home/>
+    </SafeAreaView>
   )
 }
