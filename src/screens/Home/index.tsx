@@ -11,42 +11,35 @@ import {
 } from "react-native";
 import { styles } from "./styles";
 import { Participant } from "../components/Participant";
+import React, { useState } from "react";
 
 export default function Home() {
-  const participants = [
-    "Rodrigo",
-    "Vini",
-    "Guilherme",
-    "João",
-    "pedro",
-    "pedra",
-    "fernando",
-    "fernanda",
-    "feijão",
-    "Lol",
-    "fsdfsdf",
-    "dfsf",
-  ];
+  const [participants, setParticipants] = useState<string[]>([]);
+  const [participantName, setParticipantName] = useState("");
 
   function handleParticipantAdd() {
-    if (participants.includes("Rodrigo")) {
-      return Alert.alert("Rodrigo ja existe!");
+    if (participants.includes(participantName)) {
+      return Alert.alert(participantName, "Já existe");
     }
-    console.log("Botão acionado!");
-    return Alert.alert("Rodrigo ja existe!");
+    setParticipants((prevState) => [...prevState, participantName]);
+    setParticipantName("");
+    console.log(participants);
   }
 
   function handleParticipantRemove(name: string) {
-    Alert.alert('Remover participante ',` Deseja remover o participante ${name}?`, [
+    Alert.alert(
+      "Remover participante ",` Deseja remover o participante ${name}?`,
+      [
         {
-            text: 'Sim',
-            onPress: () => Alert.alert("Deletado!")
+          text: "Sim",
+          onPress: () => Alert.alert("Deletado!"),
         },
         {
-            text: 'Não',
-            style: 'cancel'
-        }
-    ]);
+          text: "Não",
+          style: "cancel",
+        },
+      ]
+    );
     console.log(` removeu ${name}`);
   }
 
@@ -61,6 +54,8 @@ export default function Home() {
             style={styles.textInput}
             placeholder="Nome do participante"
             placeholderTextColor="#6b6b6b"
+            onChangeText={setParticipantName}
+            value={participantName}
           />
           <TouchableOpacity
             style={styles.buttom}
@@ -85,13 +80,6 @@ export default function Home() {
             <Text style={styles.emptyList}>Nada na lista</Text>
           )}
         />
-        {/* {participants.map((participant) => (
-            <Participant
-              key={participant}
-              name={participant}
-              onRemove={() => handleParticipantRemove(participant)}
-            />
-          ))} */}
       </View>
     </SafeAreaView>
   );
